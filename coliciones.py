@@ -16,29 +16,64 @@ tamaño    = ancho,alto=300,300 # Tamaño de la pantalla
 pantalla  = pygame.display.set_mode(tamaño) # Se cre una pantall con pygame con el tamaño prediseñado
 pygame.display.set_caption("Coliciones") # Se le pone un nombre al borde de la pantalla
 # -DATOS DE  LOS CUBOS
-lado_x    = (ancho/2)-60
-lado_y    = (alto/2)
-tam_cubo  = 25
-lado_x_2  = (ancho/2)+50
-lado_y_2  = (alto/2)
-velocidad = 0
+tam_cubo    = 25
+lado_x      = (ancho/2)-75
+lado_y      = (alto/2)
+lado_x_2    = (ancho/2)+50
+lado_y_2    = (alto/2)
+velocidad   = 0
+
 
 # -BUCLÉ 
 while True:
     for accion in pygame.event.get():
-        if accion.type==pygame.QUIT:
+        # Si se presiona el boton 'X' salimos
+        if accion.type == pygame.QUIT:
             quit()
-        if accion.type==pygame.KEYDOWN:
+        if accion.type    == pygame.KEYDOWN:
+            # Si presionamos la tecla 'c'
             if accion.key == pygame.K_c:
-               velocidad = 30
+               velocidad = 10
+
 
     # Para que tenga efecto la velocidad en los cubos
     lado_x   += velocidad
     lado_x_2 -= velocidad
 
+    lado_cubo_1 = lado_x   + tam_cubo 
+    lado_cubo_2 = lado_x_2  
+
+    # Muestra la pantalla con fondo de color
     pantalla.fill(blanco)
     # Impresión de los cubos
     cubo_1 = pygame.draw.rect ( pantalla , negro , ( lado_x   , lado_y   , tam_cubo , tam_cubo ) )
     cubo_2 = pygame.draw.rect ( pantalla , rojo  , ( lado_x_2 , lado_y_2 , tam_cubo , tam_cubo ) )
+    # BORRAR LINAS DE MEDIDA XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    linea  = pygame.draw.line ( pantalla , verde , ( 150, 300 ) , ( 150 , 0 ) )  
+    lineaX = pygame.draw.line ( pantalla , verde , ( 100, 300 ) , ( 100 , 0 ) )  
+    lineaI = pygame.draw.line ( pantalla , verde , (  75, 300 ) , (  75 , 0 ) )  
+    lineaD = pygame.draw.line ( pantalla , verde , ( 200, 300 ) , ( 200 , 0 ) )  
+    
+    # Condición para evitar que los objetos salgan de pantalla
+        # Si el cubo va de izquierda a derecha
+    if lado_cubo_1 >= ancho:
+        lado_x = 0
+
+    if lado_x <= 0:
+        lado_x = 0
+        velocidad *= -1
+
+        # Si el cubo va de derecha a izquierda
+    if lado_x_2 <= 0:
+        lado_x_2 = 275 
+
+    if lado_cubo_2 >= ancho:
+        lado_x_2 = 275 
+        velocidad *= -1
+    # Condición de colisión
+    if lado_cubo_1 == lado_cubo_2:
+        velocidad *= -1
+    # Manejo de la pantalla
     pygame.display.update()
+    # Actualización de la pantalla
     pygame.time.delay(30)
