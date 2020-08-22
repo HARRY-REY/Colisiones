@@ -30,11 +30,15 @@ while True:
             quit()
         if accion.type==pygame.KEYDOWN:
             if accion.key == pygame.K_c:
-                pass
+               velocidad = 30
+
+    # Para que tenga efecto la velocidad en los cubos
+    lado_x   += velocidad
+    lado_x_2 -= velocidad
 
     pantalla.fill(blanco)
     # Impresión de los cubos
     cubo_1 = pygame.draw.rect ( pantalla , negro , ( lado_x   , lado_y   , tam_cubo , tam_cubo ) )
     cubo_2 = pygame.draw.rect ( pantalla , rojo  , ( lado_x_2 , lado_y_2 , tam_cubo , tam_cubo ) )
     pygame.display.update()
-    pygame.time.delay(3000)
+    pygame.time.delay(30)
